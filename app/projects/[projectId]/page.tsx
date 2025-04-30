@@ -23,6 +23,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
+import { DocumentCard } from "@/components/document-card"
 
 // Document status types
 type DocumentStatus = "processing" | "rejected" | "approved"
@@ -120,29 +121,34 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
       {/* Left Sidebar */}
       <div
         className={cn(
-          "flex flex-col border-r bg-[#f9f8f6] transition-all duration-300",
+          "flex flex-col border-r bg-[#FAF9F6] transition-all duration-300",
           sidebarCollapsed ? "w-0 overflow-hidden" : "w-64",
         )}
       >
-        
-        {/* Logo */}
-        <div className="flex items-center justify-left" style={{ position: "sticky", top: "34px", marginBottom: "40px", marginLeft: "20px" }}>
-              <img src="/logo-text.svg" alt="Structure Logo" className="h-[34px] w-auto" style={{ height: "34px" }} />
+        {/* User Profile */}
+        <div className="px-4 py-3">
+          <div className="flex items-center gap-3">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="/placeholder.svg" />
+              <AvatarFallback className="bg-black text-white">IL</AvatarFallback>
+            </Avatar>
+            <div className="font-normal text-gray-900">Iris Leung</div>
           </div>
+        </div>
 
         {/* Search */}
-        <div className="px-4 py-2">
+        <div className="px-4 py-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
             <Input
               placeholder="Find..."
-              className="h-9 rounded-full bg-[#e8e5e0] pl-9 border-none focus-visible:ring-0"
+              className="h-10 rounded-lg bg-gray-50 pl-9 border-none"
             />
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="mt-2 flex-1">
+        <nav className="flex-1">
           <div className="px-3 py-2">
             <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-500">
               <Clock className="h-4 w-4" />
@@ -151,55 +157,35 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           </div>
 
           <div className="px-3 py-1">
-            <Link href="/" className="block">
-              <div className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-200">
-                <LayoutDashboard className="h-4 w-4" />
+            <Link href="/">
+              <div className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-normal text-gray-900 hover:bg-gray-100">
+                <LayoutGrid className="h-4 w-4" />
                 <span>My dashboard</span>
               </div>
             </Link>
           </div>
 
           <div className="px-3 py-1">
-            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 rounded-md">
               <Inbox className="h-4 w-4" />
               <span>Inbox</span>
             </div>
           </div>
 
           <div className="px-3 py-1">
-            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
-              <Settings className="h-4 w-4" />
-              <span>Admin</span>
-            </div>
-          </div>
-
-          <div className="px-3 py-1">
-            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
-              <Archive className="h-4 w-4" />
-              <span>Archived</span>
-            </div>
-          </div>
-
-          <div className="px-3 py-1">
-            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 rounded-md">
               <Trash2 className="h-4 w-4" />
               <span>Trash</span>
             </div>
           </div>
-        </nav>
 
-        {/* User Profile */}
-        <div className="mt-auto border-t p-4">
-          <div className="flex items-center gap-3">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src="/placeholder.svg" />
-              <AvatarFallback className="bg-black text-white">IL</AvatarFallback>
-            </Avatar>
-            <div>
-              <div className="font-medium">Iris Leung</div>
+          <div className="px-3 py-1">
+            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 rounded-md">
+              <Archive className="h-4 w-4" />
+              <span>Archived</span>
             </div>
           </div>
-        </div>
+        </nav>
       </div>
 
       {/* Main Content */}
@@ -222,31 +208,48 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
         </div>
 
         {/* Project Header */}
-        <div className="border-b p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-semibold">{project.name}</h1>
-              <div className="rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">Processing</div>
-            </div>
-          </div>
-        </div>
+{/* Project Header */}
+<div className="border-b p-6">
+  <div className="flex items-center justify-between">
+    {/* Left: title & status */}
+    <div className="flex items-center gap-3">
+      <h1 className="text-2xl font-semibold">{project.name}</h1>
+      <div className="rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">
+        Processing
+      </div>
+    </div>
+
+    {/* Right: last viewed + view toggles */}
+    <div className="flex items-center gap-6">
+      {/* Last viewed */}
+      <div className="flex items-center gap-1 text-sm text-gray-600">
+        <span>Last viewed</span>
+        <ChevronDown className="h-4 w-4" />
+      </div>
+
+      {/* Grid/List toggles */}
+      <div className="flex rounded-md border">
+        <button
+          className={cn("p-1.5", viewMode === "grid" && "bg-gray-100")}
+          onClick={() => setViewMode("grid")}
+        >
+          <LayoutGrid className="h-4 w-4" />
+        </button>
+        <button
+          className={cn("p-1.5", viewMode === "list" && "bg-gray-100")}
+          onClick={() => setViewMode("list")}
+        >
+          <List className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
         {/* Content Area */}
         <div className="flex-1 overflow-auto p-6">
           {/* View Controls */}
-          <div className="mb-6 flex items-center justify-end gap-2">
-            <div className="flex items-center gap-1 text-sm text-gray-600">
-              <span>Last viewed</span>
-              <ChevronDown className="h-4 w-4" />
-            </div>
-            <div className="flex rounded-md border">
-              <button className={cn("p-1.5", viewMode === "grid" && "bg-gray-100")} onClick={() => setViewMode("grid")}>
-                <LayoutGrid className="h-4 w-4" />
-              </button>
-              <button className={cn("p-1.5", viewMode === "list" && "bg-gray-100")} onClick={() => setViewMode("list")}>
-                <List className="h-4 w-4" />
-              </button>
-            </div>
+          <div className="mb-6 flex items-center justify-end ">
           </div>
 
           {/* Documents Grid */}
@@ -257,68 +260,15 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
             )}
           >
             {filteredDocuments.map((doc) => (
-              <Link href={`/projects/${projectId}/documents/${doc.id}`} key={doc.id}>
-                <div className="group relative rounded-lg border bg-white p-4 shadow-sm transition-all hover:shadow">
-                  <div className="flex items-center gap-2">
-                    {doc.status === "processing" && (
-                      <svg
-                        className="h-5 w-5 text-amber-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                        <path d="M12 6v6l4 2" />
-                      </svg>
-                    )}
-                    {doc.status === "rejected" && (
-                      <svg
-                        className="h-5 w-5 text-red-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="m15 9-6 6" />
-                        <path d="m9 9 6 6" />
-                      </svg>
-                    )}
-                    {doc.status === "approved" && (
-                      <svg
-                        className="h-5 w-5 text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                        <path d="m9 12 2 2 4-4" />
-                      </svg>
-                    )}
-                    <span className="font-medium">{doc.name}</span>
-                    <button className="ml-auto opacity-0 group-hover:opacity-100">
-                      <MoreHorizontal className="h-5 w-5 text-gray-400" />
-                    </button>
-                  </div>
-                </div>
-              </Link>
+              <DocumentCard
+                key={doc.id}
+                id={doc.id}
+                projectId={projectId}
+                name={doc.name}
+                status={doc.status}
+                lastUpdated={doc.lastUpdated}
+                type={doc.type}
+              />
             ))}
           </div>
         </div>

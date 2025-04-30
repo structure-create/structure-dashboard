@@ -3,9 +3,11 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronDown, ChevronRight, ChevronLeft, Search, PanelLeft } from "lucide-react"
+import { ChevronDown, ChevronRight, ChevronLeft, Search, PanelLeft, Clock, LayoutGrid, Inbox, Trash2, Archive } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Input } from "@/components/ui/input"
 
 export default function DocumentPage({ params }: { params: { projectId: string; documentId: string } }) {
   const { projectId, documentId } = params

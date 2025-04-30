@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import Link from "next/link"
 
 // Project status types
 type ProjectStatus = "all" | "processing" | "rejected" | "approved"
@@ -44,40 +45,64 @@ const projects: Project[] = [
   },
   {
     id: "2",
-    name: "Spruce Lane",
-    status: "rejected",
+    name: "Deale Community Park",
+    status: "processing",
     lastUpdated: "Apr 25, 2025",
   },
   {
     id: "3",
-    name: "Spruce Lane",
+    name: "Cape St Claire Fire...",
     status: "approved",
     lastUpdated: "Apr 22, 2025",
   },
   {
     id: "4",
-    name: "Spruce Lane",
+    name: "Forest Dr/MD 665 Int...",
     status: "processing",
     lastUpdated: "Apr 20, 2025",
   },
   {
     id: "5",
-    name: "Spruce Lane",
-    status: "approved",
+    name: "Franklin Manor Dredgi...",
+    status: "rejected",
     lastUpdated: "Apr 18, 2025",
   },
   {
     id: "6",
-    name: "Spruce Lane",
-    status: "rejected",
+    name: "Jug Bay Education Cen...",
+    status: "approved",
     lastUpdated: "Apr 15, 2025",
   },
   {
     id: "7",
-    name: "Spruce Lane",
-    status: "processing",
+    name: "Millersville Library",
+    status: "approved",
     lastUpdated: "Apr 12, 2025",
   },
+  {
+    id: "8",
+    name: "Greenways",
+    status: "approved",
+    lastUpdated: "Apr 10, 2025",
+  },
+  {
+    id: "9",
+    name: "Patuxent Clarifier",
+    status: "approved",
+    lastUpdated: "Apr 8, 2025",
+  },
+  {
+    id: "10",
+    name: "Najoles Road Outfall-00",
+    status: "approved",
+    lastUpdated: "Apr 6, 2025",
+  },
+  {
+    id: "11",
+    name: "Sun Valley Dr",
+    status: "approved",
+    lastUpdated: "Apr 4, 2025",
+  }
 ]
 
 export default function Dashboard() {
@@ -104,28 +129,34 @@ export default function Dashboard() {
       {/* Left Sidebar */}
       <div
         className={cn(
-          "flex flex-col border-r bg-[#f9f8f6] transition-all duration-300",
+          "flex flex-col border-r bg-[#FAF9F6] transition-all duration-300",
           sidebarCollapsed ? "w-0 overflow-hidden" : "w-64",
         )}
       >
-        {/* Logo */}
-        <div className="flex items-center justify-left" style={{ position: "sticky", top: "34px", marginBottom: "40px", marginLeft: "20px" }}>
-            <img src="/logo-text.svg" alt="Structure Logo" className="h-[34px] w-auto" style={{ height: "34px" }} />
+        {/* User Profile */}
+        <div className="px-4 py-3">
+          <div className="flex items-center gap-3">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="/placeholder.svg" />
+              <AvatarFallback className="bg-black text-white">IL</AvatarFallback>
+            </Avatar>
+            <div className="font-normal text-gray-900">Iris Leung</div>
+          </div>
         </div>
 
         {/* Search */}
-        <div className="px-4 py-2">
+        <div className="px-4 py-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-700" />
             <Input
               placeholder="Find..."
-              className="h-9 rounded-full bg-[#e8e5e0] pl-9 border-none focus-visible:ring-0"
+              className="h-10 rounded-sm bg-white pl-9 border border-[#EFEEE9] text-[#EFEEE9]"
             />
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="mt-2 flex-1">
+        <nav className="flex-1">
           <div className="px-3 py-2">
             <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-500">
               <Clock className="h-4 w-4" />
@@ -134,53 +165,33 @@ export default function Dashboard() {
           </div>
 
           <div className="px-3 py-1">
-            <div className="flex items-center gap-2 rounded-md bg-gray-200 px-3 py-2 text-sm font-medium">
-              <LayoutDashboard className="h-4 w-4" />
+            <div className="flex items-center gap-2 rounded-md bg-gray-100 px-3 py-2 text-sm font-normal text-gray-900">
+              <LayoutGrid className="h-4 w-4" />
               <span>My dashboard</span>
             </div>
           </div>
 
           <div className="px-3 py-1">
-            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 rounded-md">
               <Inbox className="h-4 w-4" />
               <span>Inbox</span>
             </div>
           </div>
 
           <div className="px-3 py-1">
-            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
-              <Settings className="h-4 w-4" />
-              <span>Admin</span>
-            </div>
-          </div>
-
-          <div className="px-3 py-1">
-            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
-              <Archive className="h-4 w-4" />
-              <span>Archived</span>
-            </div>
-          </div>
-
-          <div className="px-3 py-1">
-            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md">
+            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 rounded-md">
               <Trash2 className="h-4 w-4" />
               <span>Trash</span>
             </div>
           </div>
-        </nav>
 
-        {/* User Profile */}
-        <div className="mt-auto border-t p-4">
-          <div className="flex items-center gap-3">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src="/placeholder.svg" />
-              <AvatarFallback className="bg-black text-white">IL</AvatarFallback>
-            </Avatar>
-            <div>
-              <div className="font-medium">Iris Leung</div>
+          <div className="px-3 py-1">
+            <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 rounded-md">
+              <Archive className="h-4 w-4" />
+              <span>Archived</span>
             </div>
           </div>
-        </div>
+        </nav>
       </div>
 
       {/* Main Content */}
@@ -191,6 +202,7 @@ export default function Dashboard() {
             <button onClick={() => setSidebarCollapsed(!sidebarCollapsed)} className="rounded-md p-1 hover:bg-gray-100">
               {sidebarCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
             </button>
+            <h1 className="text-xl font-normal text-gray-700">Dashboard</h1>
           </div>
           <Button className="bg-orange-600 hover:bg-orange-700">
             <Plus className="mr-1 h-4 w-4" />
@@ -202,95 +214,64 @@ export default function Dashboard() {
         <div className="flex-1 overflow-auto p-6">
           {/* Status Filters */}
           <div className="mb-6 flex items-center gap-2">
-            <Button
+           <Button
               variant="ghost"
-              className={cn("rounded-md px-4 py-2 text-sm font-medium", activeStatus === "all" && "bg-gray-100")}
+              className={cn(
+                "rounded-md px-4 py-2 text-sm font-medium text-gray-500",
+                activeStatus === "all" && "bg-[#F5F4F1] text-gray-900"
+              )}
               onClick={() => setActiveStatus("all")}
             >
-              <svg
+              <img
+                src="/svgs/allprojects.svg"
+                alt="All Projects"
                 className="mr-2 h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <rect width="18" height="18" x="3" y="3" rx="2" />
-                <path d="M9 9h6" />
-                <path d="M9 12h6" />
-                <path d="M9 15h6" />
-              </svg>
+              />
               All applications
             </Button>
             <Button
               variant="ghost"
-              className={cn("rounded-md px-4 py-2 text-sm font-medium", activeStatus === "processing" && "bg-gray-100")}
+              className={cn(
+                "rounded-md px-4 py-2 text-sm font-medium text-gray-500",
+                activeStatus === "processing" && "bg-[#F5F4F1] text-gray-900"
+              )}
               onClick={() => setActiveStatus("processing")}
             >
-              <svg
-                className="mr-2 h-4 w-4 text-amber-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                <path d="M12 6v6l4 2" />
-              </svg>
+              <img
+                src="/svgs/processing.svg"
+                alt="Processing"
+                className="mr-2 h-4 w-4"
+              />
               Processing
             </Button>
             <Button
               variant="ghost"
-              className={cn("rounded-md px-4 py-2 text-sm font-medium", activeStatus === "rejected" && "bg-gray-100")}
+              className={cn(
+                "rounded-md px-4 py-2 text-sm font-medium text-gray-500",
+                activeStatus === "rejected" && "bg-[#F5F4F1] text-gray-900"
+              )}
               onClick={() => setActiveStatus("rejected")}
             >
-              <svg
-                className="mr-2 h-4 w-4 text-red-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path d="m15 9-6 6" />
-                <path d="m9 9 6 6" />
-              </svg>
+              <img
+                src="/svgs/rejected.svg"
+                alt="Rejected"
+                className="mr-2 h-4 w-4"
+              />
               Rejected
             </Button>
             <Button
               variant="ghost"
-              className={cn("rounded-md px-4 py-2 text-sm font-medium", activeStatus === "approved" && "bg-gray-100")}
+              className={cn(
+                "rounded-md px-4 py-2 text-sm font-medium text-gray-500",
+                activeStatus === "approved" && "bg-[#F5F4F1] text-gray-900"
+              )}
               onClick={() => setActiveStatus("approved")}
             >
-              <svg
-                className="mr-2 h-4 w-4 text-green-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                <path d="m9 12 2 2 4-4" />
-              </svg>
+              <img
+                src="/svgs/approved.svg"
+                alt="Approved"
+                className="mr-2 h-4 w-4"
+              />
               Approved
             </Button>
 
@@ -324,69 +305,21 @@ export default function Dashboard() {
             )}
           >
             {filteredProjects.map((project) => (
-              <div
-                key={project.id}
-                className="group relative rounded-lg border bg-white p-4 shadow-sm transition-all hover:shadow"
-              >
-                <div className="flex items-center gap-2">
-                  {project.status === "processing" && (
-                    <svg
-                      className="h-5 w-5 text-amber-500"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                      <path d="M12 6v6l4 2" />
-                    </svg>
-                  )}
-                  {project.status === "rejected" && (
-                    <svg
-                      className="h-5 w-5 text-red-500"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="m15 9-6 6" />
-                      <path d="m9 9 6 6" />
-                    </svg>
-                  )}
-                  {project.status === "approved" && (
-                    <svg
-                      className="h-5 w-5 text-green-500"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                      <path d="m9 12 2 2 4-4" />
-                    </svg>
-                  )}
-                  <span className="font-medium">{project.name}</span>
-                  <button className="ml-auto opacity-0 group-hover:opacity-100">
-                    <MoreHorizontal className="h-5 w-5 text-gray-400" />
-                  </button>
+              <Link href={`/projects/${project.id}`} key={project.id}>
+                <div className="group relative rounded-lg border bg-white p-4 shadow-sm transition-all hover:shadow">
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={`/svgs/${project.status}.svg`}
+                      alt={project.status}
+                      className="h-5 w-5"
+                    />
+                    <span className="font-medium">{project.name}</span>
+                    <button className="ml-auto opacity-0 group-hover:opacity-100">
+                      <MoreHorizontal className="h-5 w-5 text-gray-400" />
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
