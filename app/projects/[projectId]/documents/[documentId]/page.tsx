@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronDown, ChevronRight, ChevronLeft, Search } from "lucide-react"
+import { ChevronDown, ChevronRight, ChevronLeft, Search, PanelLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -14,7 +14,6 @@ export default function DocumentPage({ params }: { params: { projectId: string; 
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(true)
   const [rightSidebarOpen, setRightSidebarOpen] = useState(true)
 
-  // Mock data for pages/documents
   const documents = [
     { id: "page1", name: "Page 1" },
     { id: "page2", name: "Page 2" },
@@ -32,7 +31,6 @@ export default function DocumentPage({ params }: { params: { projectId: string; 
     { id: "a41", name: "A4.1 - Accessibility Details" },
   ]
 
-  // Mock data for compliance sections
   const complianceSections = [
     { id: "plumbing", name: "Plumbing", count: 1 },
     { id: "zoning", name: "Zoning", count: 4 },
@@ -42,268 +40,134 @@ export default function DocumentPage({ params }: { params: { projectId: string; 
   ]
 
   const toggleSection = (sectionId: string) => {
-    if (expandedSection === sectionId) {
-      setExpandedSection("")
-    } else {
-      setExpandedSection(sectionId)
-    }
+    setExpandedSection(expandedSection === sectionId ? "" : sectionId)
   }
 
   return (
-    <div className="flex h-screen flex-col">
-      {/* Top Navigation */}
-      <header className="flex h-16 items-center justify-between border-b bg-white px-4">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded bg-orange-500 text-white">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z" />
-              <path d="m7 16.5-4.74-2.85" />
-              <path d="m7 16.5 5-3" />
-              <path d="M7 16.5v5.17" />
-              <path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z" />
-              <path d="m17 16.5-5-3" />
-              <path d="m17 16.5 4.74-2.85" />
-              <path d="M17 16.5v5.17" />
-              <path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z" />
-              <path d="M12 8 7.26 5.15" />
-              <path d="m12 8 4.74-2.85" />
-              <path d="M12 13.5V8" />
-            </svg>
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="text-lg font-medium">Spruce Lane</span>
+    <div className="flex h-screen">
+
+      {/* Left Sidebar */}
+      <div className={cn("border-r bg-gray-50 flex flex-col transition-all duration-300", leftSidebarOpen ? "w-72" : "w-10")}>
+        {/* Row 1: Logo + Collapse Button */}
+        <div className="flex items-center justify-between h-14 px-4">
+          {leftSidebarOpen && <img src="/logo.svg" alt="Logo" className="h-6 w-auto" />}
+          <button
+            onClick={() => setLeftSidebarOpen(!leftSidebarOpen)}
+            className="hover:bg-gray-200 p-1 rounded-full"
+          >
+            {leftSidebarOpen ? <PanelLeft className="h-4 w-4" /> : <PanelLeft className="h-4 w-4" />}
+          </button>
+        </div>
+
+        {/* Row 2: Project Dropdown */}
+        {leftSidebarOpen && (
+          <div className="flex items-center justify-between px-4 h-12">
+            <span className="text-base font-semibold text-gray-800">Spruce Lane</span>
             <ChevronDown className="h-4 w-4 text-gray-500" />
           </div>
-        </div>
+        )}
 
-        <div className="ml-auto flex items-center gap-2">
-          <Button variant="outline" size="sm" className="h-9">
-            Submit
-          </Button>
-          <Button variant="outline" size="sm" className="h-9">
-            Export
-          </Button>
-          <Button size="sm" className="h-9 bg-orange-600 hover:bg-orange-700">
-            Share
-          </Button>
-        </div>
-      </header>
+        {/* Row 3: Tabs and Search */}
+        {leftSidebarOpen && (
+          <div className="flex items-center justify-between px-4 h-12 border-b">
+            <div className="flex space-x-4">
+              <button className="text-sm font-medium bg-[#d6cfc7] text-black px-3 py-1 rounded-lg">Drawings</button>
+              <button className="text-sm font-medium text-gray-600 hover:text-black">Specifications</button>
+            </div>
+            <Search className="h-4 w-4 text-gray-600 cursor-pointer" />
+          </div>
+        )}
 
-      {/* Secondary Navigation */}
-      <div className="flex h-12 items-center border-b bg-gray-50 px-4">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            className={cn(
-              "flex h-10 items-center gap-1 rounded-none border-b-2 border-transparent px-4 text-sm font-normal",
-              "bg-orange-50 border-orange-500 text-orange-700",
-            )}
-          >
-            Drawings
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex h-10 items-center gap-1 rounded-none border-b-2 border-transparent px-4 text-sm font-normal"
-          >
-            Specifications
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex h-10 items-center gap-1 rounded-none border-b-2 border-transparent px-2 text-sm font-normal"
-          >
-            <Search className="h-4 w-4" />
-          </Button>
-        </div>
+        {/* Divider */}
+        <div className="border-b" />
+
+        {/* Table of Contents */}
+        {leftSidebarOpen && (
+          <div className="overflow-y-auto px-4 py-2">
+            {documents.map((doc) => (
+              <div
+                key={doc.id}
+                className={cn(
+                  "border-l-4 border-transparent pl-2 py-2 text-sm hover:bg-gray-100",
+                  doc.active && "border-orange-500 bg-orange-50"
+                )}
+              >
+                <Link href={`/projects/${projectId}/documents/${doc.id}`} className="block">
+                  {doc.name}
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Left Sidebar - Document Pages */}
-        <div
-          className={cn(
-            "border-r bg-gray-50 transition-all duration-300 ease-in-out",
-            leftSidebarOpen ? "w-72" : "w-10",
-          )}
-        >
-          {/* Toggle Button */}
-          <div className="flex h-10 items-center justify-end border-b px-2">
-            <button
-              onClick={() => setLeftSidebarOpen(!leftSidebarOpen)}
-              className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-200"
-            >
-              {leftSidebarOpen ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-            </button>
-          </div>
 
-          {/* Document List - Only show when sidebar is open */}
-          {leftSidebarOpen && (
-            <div className="overflow-y-auto">
-              {documents.map((doc) => (
-                <div
-                  key={doc.id}
-                  className={cn(
-                    "border-l-4 border-transparent px-4 py-3 hover:bg-gray-100",
-                    doc.active && "border-l-4 border-orange-500 bg-orange-50",
-                  )}
-                >
-                  <Link href={`/projects/${projectId}/documents/${doc.id}`} className="block text-sm">
-                    {doc.name}
-                  </Link>
-                </div>
-              ))}
+      {/* Main Viewer */}
+      <div className="flex-1 overflow-hidden bg-white">
+        <iframe
+          src={`/examples/spruce-lane.pdf#toolbar=0&navpanes=0&scrollbar=0&view=fit`}
+          className="w-full h-full"
+          style={{ border: "none" }}
+          title="PDF Document"
+        />
+      </div>
+
+
+      {/* Right Sidebar */}
+      <div className={cn("border-l bg-white flex flex-col transition-all duration-300", rightSidebarOpen ? "w-80" : "w-10")}>
+        
+        {/* Action Buttons */}
+        {rightSidebarOpen && (
+          <>
+            <div className="flex justify-center gap-2 p-4">
+              <Button variant="outline" size="sm">Submit</Button>
+              <Button variant="outline" size="sm">Export</Button>
+              <Button size="sm" className="bg-orange-600 hover:bg-orange-700 text-white">Share</Button>
             </div>
-          )}
-        </div>
 
-        {/* Main Document Viewer */}
-        <div className="relative flex-1 overflow-auto bg-white">
-          <div className="relative">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-04-29%20at%207.12.41%E2%80%AFPM-FtBEa9OmSomAZsnG6WqyNPUUYPefor.png"
-              alt="Spruce Lane Site Plan"
-              width={1200}
-              height={900}
-              className="min-w-full"
-            />
-          </div>
-        </div>
+            {/* Tabs */}
+            <div className="flex border-b">
+              <button
+                className={cn("flex-1 py-3 text-center text-sm font-medium", activeTab === "violations" && "border-b-2 border-gray-900")}
+                onClick={() => setActiveTab("violations")}
+              >
+                Violations
+              </button>
+              <button
+                className={cn("flex-1 py-3 text-center text-sm font-medium", activeTab === "comments" && "border-b-2 border-gray-900")}
+                onClick={() => setActiveTab("comments")}
+              >
+                Comments
+              </button>
+            </div>
 
-        {/* Right Sidebar - Compliance */}
-        <div
-          className={cn(
-            "border-l bg-white transition-all duration-300 ease-in-out",
-            rightSidebarOpen ? "w-80" : "w-10",
-          )}
-        >
-          {/* Toggle Button */}
-          <div className="flex h-10 items-center border-b px-2">
-            <button
-              onClick={() => setRightSidebarOpen(!rightSidebarOpen)}
-              className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-200"
-            >
-              {rightSidebarOpen ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-            </button>
-          </div>
-
-          {/* Only show content when sidebar is open */}
-          {rightSidebarOpen && (
-            <>
-              {/* Tabs */}
-              <div className="flex border-b">
-                <button
-                  className={cn(
-                    "flex-1 border-b-2 border-transparent py-3 text-center text-sm font-medium",
-                    activeTab === "violations" && "border-gray-900",
-                  )}
-                  onClick={() => setActiveTab("violations")}
-                >
-                  Violations
-                </button>
-                <button
-                  className={cn(
-                    "flex-1 border-b-2 border-transparent py-3 text-center text-sm font-medium",
-                    activeTab === "comments" && "border-gray-900",
-                  )}
-                  onClick={() => setActiveTab("comments")}
-                >
-                  Comments
-                </button>
-              </div>
-
-              {/* Violations Content */}
+            {/* Tab Content */}
+            <div className="overflow-y-auto flex-1">
               {activeTab === "violations" && (
-                <div className="overflow-y-auto">
+                <div>
                   {complianceSections.map((section) => (
                     <div key={section.id} className="border-b">
                       <button
-                        className="flex w-full items-center justify-between px-4 py-4"
+                        className="w-full px-4 py-3 flex justify-between items-center"
                         onClick={() => toggleSection(section.id)}
                       >
                         <div className="flex items-center gap-2">
-                          <span>{section.name}</span>
+                          {section.name}
                           {section.count > 0 && (
-                            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">
-                              {section.count}
-                            </span>
+                            <span className="bg-red-500 text-white text-xs rounded-full px-2 py-0.5">{section.count}</span>
                           )}
                         </div>
-                        <ChevronRight
-                          className={cn("h-5 w-5 transition-transform", expandedSection === section.id && "rotate-90")}
-                        />
+                        <ChevronRight className={cn("h-4 w-4 transition-transform", expandedSection === section.id && "rotate-90")} />
                       </button>
-
-                      {/* Expanded Content for Electrical */}
-                      {expandedSection === "electrical" && section.id === "electrical" && (
-                        <div className="border-t bg-gray-50 px-4 py-4">
-                          <div className="mb-6">
-                            <h3 className="font-medium">
-                              Incomplete or Missing Electrical System Layout and Panel Schedules
-                            </h3>
-                            <div className="mt-2 flex items-center gap-2">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="text-gray-500"
-                              >
-                                <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"></path>
-                                <path d="M7 7h.01"></path>
-                              </svg>
-                              <span className="text-sm text-gray-700">
-                                California Electrical Code (CEC)/NEC 210.8(A)
-                              </span>
-                            </div>
-                            <p className="mt-3 text-sm">
-                              All 125-volt, single-phase, 15- and 20-ampere receptacles installed in the locations
-                              specified in 210.8(A)(1) through (A)(10) shall have ground-fault circuit-interrupter
-                              protection for personnel.
-                            </p>
-                          </div>
-
+                      {expandedSection === section.id && section.id === "electrical" && (
+                        <div className="bg-gray-50 px-4 py-4 text-sm space-y-4">
                           <div>
-                            <h3 className="font-medium">Insufficient Working Space Around Electrical Panels</h3>
-                            <div className="mt-2 flex items-center gap-2">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="text-gray-500"
-                              >
-                                <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z"></path>
-                                <path d="M7 7h.01"></path>
-                              </svg>
-                              <span className="text-sm text-gray-700">CEC/NEC 110.26(A)(1), (2), (3)</span>
-                            </div>
-                            <p className="mt-3 text-sm">
-                              Working space for equipment operating at 600 volts, nominal, or less to ground and likely
-                              to require examination, adjustment, servicing, or maintenance while energized shall comply
-                              with the dimensions of 110.26(A)(1), (2), and (3)
-                            </p>
+                            <h4 className="font-semibold">Incomplete or Missing Electrical System Layout</h4>
+                            <p>All 125V, 15–20A receptacles listed in 210.8(A)(1)-(10) shall have GFCI protection.</p>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold">Insufficient Working Space Around Panels</h4>
+                            <p>Working space around panels must meet 110.26(A)(1)-(3).</p>
                           </div>
                         </div>
                       )}
@@ -311,93 +175,19 @@ export default function DocumentPage({ params }: { params: { projectId: string; 
                   ))}
                 </div>
               )}
-
-              {/* Comments Content */}
               {activeTab === "comments" && (
-                <div className="p-4">
-                  {/* Comment 1 */}
-                  <div className="mb-6">
-                    <div className="flex items-start gap-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-sm font-medium text-gray-700">
-                        B
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">Bob the Builder</span>
-                          <span className="text-xs text-gray-500">15 mins ago</span>
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          <span className="flex items-center gap-1">Page 4</span>
-                        </div>
-                        <p className="mt-1 text-sm text-gray-700">
-                          Provide additional dimensions for the kitchen layout. The distance between the island and the
-                          refrigerator appears tight and may not meet code-required clearances.
-                        </p>
-                        <div className="mt-2">
-                          <Button variant="ghost" size="sm" className="h-7 gap-1 px-2 text-xs text-gray-500">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <polyline points="9 17 4 12 9 7" />
-                              <path d="M20 18v-2a4 4 0 0 0-4-4H4" />
-                            </svg>
-                            Reply
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
+                <div className="p-4 text-sm text-gray-700 space-y-4">
+                  <div>
+                    <strong>Bob the Builder</strong> (Page 4): Add kitchen dimensions; island–fridge clearance may not meet code.
                   </div>
-
-                  {/* Comment 2 */}
-                  <div className="mb-6">
-                    <div className="flex items-start gap-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-sm font-medium text-gray-700">
-                        U
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">Uyen Hoang</span>
-                          <span className="text-xs text-gray-500">1 hr ago</span>
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          <span className="flex items-center gap-1">Page 29</span>
-                        </div>
-                        <p className="mt-1 text-sm text-gray-700">Add window sizes and sill heights to elevations</p>
-                        <div className="mt-2">
-                          <Button variant="ghost" size="sm" className="h-7 gap-1 px-2 text-xs text-gray-500">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <polyline points="9 17 4 12 9 7" />
-                              <path d="M20 18v-2a4 4 0 0 0-4-4H4" />
-                            </svg>
-                            Reply
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
+                  <div>
+                    <strong>Uyen Hoang</strong> (Page 29): Add window sizes and sill heights to elevations.
                   </div>
                 </div>
               )}
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
