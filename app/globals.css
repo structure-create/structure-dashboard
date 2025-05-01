@@ -12,6 +12,10 @@
 
 @layer base {
   :root {
+    --text: #000000;
+    --brand: #D65600;
+    --brand-hover: #983e02;
+    --alt-text: #73503C;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;

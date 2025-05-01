@@ -33,7 +33,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#FFFFFD] py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
         <div className="flex justify-center mb-8">
           <div className="flex flex-col items-center">
@@ -43,11 +43,12 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="rounded-lg bg-white px-6 py-8 shadow sm:px-10">
-          <h2 className="mb-6 text-xl font-medium text-gray-900">Sign in to your account</h2>
+        <div className="rounded-lg bg-white px-0 py-6 shadow sm:px-10" style={{ borderRadius: "7.5px", border: "1px solid #F2EFE9" }}>
+          <h2 className="mb-3 text-xl font-bold text-[#333] font-['PP_Neue_Montreal'] leading-normal">Sign in</h2>
+          <div className="w-full h-[1px] bg-[#F2EFE9] mb-3"></div>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="block text-sm font-medium text-[var(--alt-text)] mb-1">
                 Email
               </label>
               <Input
@@ -56,57 +57,41 @@ export default function LoginPage() {
                 type="email"
                 placeholder="name@gmail.com"
                 required
-                className="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                className="h-10 w-full rounded-md border border-[#F2EFE9] bg-[#FAF9F6] px-3 py-2 text-[var(--alt-text)] placeholder:text-[#E0DED7] focus:border-[var(--brand)] focus:outline-none focus:ring-0"
                 value={formData.email}
                 onChange={handleChange}
               />
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="block text-sm font-medium text-[var(--alt-text)] mb-1">
                   Password
                 </label>
-                <Link
-                  href="/auth/forgot-password"
-                  className="text-sm font-medium text-orange-600 hover:text-orange-500"
-                >
-                  Forgot your password?
-                </Link>
               </div>
-              <Input
+                <Input
                 id="password"
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
                 required
-                className="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                className="h-10 w-full rounded-md border border-[#F2EFE9] bg-[#FAF9F6] px-3 py-2 text-[var(--alt-text)] placeholder:text-[#E0DED7] focus:border-[var(--brand)] focus:outline-none focus:ring-0"
                 value={formData.password}
                 onChange={handleChange}
-              />
-            </div>
-
-            <div className="flex items-center">
-              <div className="flex h-5 items-center">
-                <input
-                  id="showPassword"
-                  name="showPassword"
-                  type="checkbox"
-                  checked={showPassword}
-                  onChange={(e) => setShowPassword(e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
                 />
-              </div>
-              <div className="ml-2 text-sm">
-                <label htmlFor="showPassword" className="font-medium text-gray-700">
-                  Show password
-                </label>
-              </div>
+                <div className="mt-4">
+                <Link
+                  href="/auth/forgot-password"
+                  className="text-sm font-medium font-weight-[400px] text-[#967B6B] hover:text-[var(--alt-text)]"
+                >
+                  Forgot your password?
+                </Link>
+                </div>
             </div>
 
             <Button
               type="submit"
-              className="w-full rounded-md bg-orange-600 py-2 px-4 text-sm font-medium text-white hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+              className="w-full rounded-md bg-[var(--brand)] py-2 px-4 text-sm font-medium text-white hover:bg-[var(--brand-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)] focus:ring-offset-2"
             >
               Sign in
             </Button>
@@ -115,7 +100,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center text-sm">
             <p className="text-gray-600">
               Don&apos;t have an account?{" "}
-              <Link href="/auth/register" className="font-medium text-orange-600 hover:text-orange-500">
+              <Link href="/auth/register" className="font-medium text-[var(--brand)] hover:text-[var(--brand-hover)]">
                 Sign up
               </Link>
             </p>
